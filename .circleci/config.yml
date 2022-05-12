@@ -19,7 +19,7 @@ jobs:
       - run: 
           name: "Downloading tunnel binary"
           command: |
-            wget http://downloads.lambdatest.com/tunnel/linux/64bit/LT_Linux.zip
+            wget https://downloads.lambdatest.com/tunnel/v3/linux/64bit/LT_Linux.zip
       
       - run: 
           name: "Extracting tunnel binary"
