@@ -53,6 +53,7 @@ jobs:
                   let PORT=PORT+1
               done
               echo "$PORT" > /tmp/port
+              
               ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose --controller circleci
            
 
