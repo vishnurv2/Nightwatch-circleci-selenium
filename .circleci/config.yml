@@ -19,7 +19,7 @@ jobs:
       - run:
           name: "Starting a local server"
           command: |
-            node server.js
+            node server.js &
       
       - run: 
           name: "Downloading tunnel binary"
