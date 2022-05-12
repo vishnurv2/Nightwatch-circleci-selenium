@@ -31,8 +31,8 @@ jobs:
           name: "Executing tunnel binary"
           background: true
           command: |
-            ./LT -user ${LAMBDATEST_EMAIL} -key ${LAMBDATEST_KEY}
-            sleep 40
+            ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY}
+            sleep 10
       
       - run: 
           name: "Setup custom environment variables"
