@@ -31,13 +31,8 @@ jobs:
           name: "Executing tunnel binary"
           background: true
           command: |
-            ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --logFile lt.log
-            sleep 10
-      
-      - run:
-          name: Log files collection
-          command: |
-            cat lt.log
+            ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose
+           
 
       - run:
           name: Wait for LambdaTest Tunnel
