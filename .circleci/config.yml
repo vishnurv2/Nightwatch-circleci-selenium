@@ -16,6 +16,9 @@ jobs:
     steps:
       - checkout
       
+      - run:
+          name: "node server.js"
+      
       - run: 
           name: "Downloading tunnel binary"
           command: |
@@ -31,7 +34,18 @@ jobs:
           name: "Executing tunnel binary"
           background: true
           command: |
-            ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose
+            if [ -z "qLzlsFECIptQEriaahXlT8RYD09zf83zePxByro9OYMlv725hs" ]; then
+                echo "Error: The parameter lambdatest_key is empty. Please ensure the environment variable LAMBDATEST_KEY has been added."
+                exit 1
+              fi
+              read LOWERPORT UPPERPORT < /proc/sys/net/ipv4/ip_local_port_range
+              PORT=$LOWERPORT
+              while [  $PORT -lt $UPPERPORT ]; do
+                  ss -lpn | grep -q ":$PORT " || break
+                  let PORT=PORT+1
+              done
+              echo "$PORT" > /tmp/port
+              ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose --controller circleci
            
 
       - run:
@@ -39,7 +53,7 @@ jobs:
           command: |
             while [ ! -f /tmp/port ]; do sleep 0.5; done
             PORT=$(head -1 /tmp/port)
-            curl  --silent --retry-connrefused --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1
+            curl  --silent --retry-connrefused --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:$PORT
       
       
       - run: 
