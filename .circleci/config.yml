@@ -21,6 +21,12 @@ jobs:
           command: |
             node server.js &
       
+      - run:
+          name: Check HTTP Server running
+          command: |
+            sleep 10
+            curl --retry 10 --retry-delay 5 -v http://127.0.0.1:8080/
+      
       - run: 
           name: "Downloading tunnel binary"
           command: |
