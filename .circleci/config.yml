@@ -62,7 +62,7 @@ jobs:
           command: |
             while [ ! -f /tmp/port ]; do sleep 0.5; done
             PORT=$(head -1 /tmp/port)
-            curl -v --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:8000/api/v1.0/info 2>&1 > /dev/null
+            curl  --silent --retry-connrefused --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:8000/api/v1.0/info 2>&1 > /dev/null
       
       
       - run: 
@@ -94,3 +94,13 @@ jobs:
 
       # run tests!
       - run: node_modules/.bin/nightwatch -e chrome
+      
+      - run:
+          name: Close LambdaTest Tunnel
+          command: |
+            PORT=$(head -1 /tmp/port)
+            status_code=$(curl --request DELETE --write-out %{http_code} --silent --output /dev/null http://127.0.0.1:8000/api/v1.0/stop)
+            if [[ "$status_code" -ne 200 ]] ; then
+              killall LT
+            fi
+            rm /tmp/port
