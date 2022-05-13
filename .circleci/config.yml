@@ -18,8 +18,9 @@ jobs:
       
       - run:
           name: "Starting a local server"
+          background: true
           command: |
-            node server.js &
+            node server.js
       
       - run:
           name: Check HTTP Server running
