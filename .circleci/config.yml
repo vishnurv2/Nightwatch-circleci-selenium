@@ -55,7 +55,6 @@ jobs:
               echo "$PORT" > /tmp/port
               
               ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose --controller circleci
-           
 
       - run:
           name: Wait for LambdaTest Tunnel
