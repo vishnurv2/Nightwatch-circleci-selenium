@@ -43,7 +43,8 @@
         "video":true,
         "console":false,
         "network":false,
-        "tunnel":true
+        "tunnel":true,
+        "tunnelName":"V"
       }
     },
 
