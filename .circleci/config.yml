@@ -63,13 +63,13 @@ jobs:
             while [ ! -f /tmp/port ]; do sleep 0.5; done
             PORT=$(head -1 /tmp/port)
             echo $PORT
-            curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:8000/api/v1.0/info
-            tunnel_status=$(curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:8000/api/v1.0/info  | jq -r .status)
+            curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:$PORT/api/v1.0/info
+            tunnel_status=$(curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:$PORT/api/v1.0/info  | jq -r .status)
             echo $tunnel_status
             while [ "$tunnel_status" != "SUCCESS" ]
             do
             sleep 0.5
-            tunnel_status=$(curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:8000/api/v1.0/info  | jq -r .status)
+            tunnel_status=$(curl  --silent --connect-timeout 5 --max-time 5 --retry 10 --retry-delay 2 --retry-max-time 30 http://127.0.0.1:$PORT/api/v1.0/info  | jq -r .status)
             echo $tunnel_status
             done
       
