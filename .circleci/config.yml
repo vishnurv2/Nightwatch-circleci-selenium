@@ -55,7 +55,7 @@ jobs:
               done
               echo "$PORT" > /tmp/port
               
-              ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose --controller circleci --infoAPIPort 8000
+              ./LT --user ${LAMBDATEST_USERNAME} --key ${LAMBDATEST_ACCESS_KEY} --verbose --controller circleci --infoAPIPort $PORT
 
       - run:
           name: Wait for LambdaTest Tunnel
